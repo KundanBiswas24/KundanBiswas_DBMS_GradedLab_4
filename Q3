@@ -1,0 +1,12 @@
+SELECT COUNT(CO2.CUS_NAME) AS 'Total Customers', CO2.cus_gender
+FROM (
+    SELECT CO.CUS_NAME, CO.CUS_GENDER
+    FROM (
+        SELECT C.CUS_NAME, C.CUS_GENDER, O.*
+        FROM customer C
+        INNER JOIN `order` O ON C.CUS_ID = O.cus_id
+        WHERE O.ord_amount >= 3000
+    ) AS CO
+    GROUP BY CO.CUS_NAME, CO.CUS_GENDER
+) AS CO2
+GROUP BY CO2.cus_gender;
